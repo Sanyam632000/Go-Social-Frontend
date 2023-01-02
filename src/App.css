@@ -1,0 +1,907 @@
+/*Header Design*/
+
+.header {
+  background-color: lightblue;
+  width: 100%;
+  height: 85px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.h1left {
+  color: blue;
+  padding: 20px;
+  margin-left: 20px;
+  display: inline;
+  text-shadow: -2px -1px 0px rgba(91, 147, 255, 1);
+}
+
+/*text-shadow: 4px 4px 5px rgba(91, 147, 255, 1);*/
+
+ul {
+  margin-top: -35px;
+}
+
+li {
+  display: inline;
+  padding: 15px;
+}
+
+.link {
+  text-decoration: none;
+  color: blue;
+}
+
+.first {
+  margin-left: 980px;
+}
+
+input {
+  margin-left: 260px;
+  width: 500px;
+  margin-top: 25px;
+  border-radius: 50px;
+  padding: 5px;
+  border: none;
+  padding-left: 15px;
+}
+
+img {
+  height: 50px;
+  width: 50px;
+  display: inline;
+  float: right;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-top: -40px;
+  margin-right: 80px;
+}
+
+.header_image {
+  margin-right: 20px;
+}
+
+/*Second Part--- .red div*/
+
+#main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.red {
+  height: 670px;
+  flex: 4.5;
+  background-color: #dee4e7;
+  overflow: hidden;
+  scrollbar-width: 5px;
+  position: sticky;
+  top: 85px;
+}
+
+.red:hover {
+  overflow-y: scroll;
+}
+
+/*normal scrollbar design---Part 2*/
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #dee4e7;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+}
+
+/*.red scrollbar design---Part 2*/
+.red::-webkit-scrollbar {
+  width: 5px;
+}
+
+.red::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.red::-webkit-scrollbar-thumb {
+  background-color: darkgray;
+}
+
+.red:hover::-webkit-scrollbar {
+  visibility: hidden;
+}
+
+.red ul {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+button {
+  background-color: #dee4e7;
+  border: 3px solid transparent;
+  border-radius: 2px;
+  padding: 5px 20px;
+  font-weight: bolder;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+button:hover {
+  background-color: lightblue;
+}
+
+.feed {
+  background-color: transparent;
+  text-align: left;
+  padding: 15px;
+  margin-left: -10px;
+  width: 300px;
+}
+.feed:hover {
+  background-color: lightblue;
+  border-radius: 5px;
+}
+
+.all_other {
+  display: inline;
+  float: left;
+  margin-top: -3px;
+  width: 35px;
+  height: 35px;
+}
+
+.link_2 {
+  text-decoration: none;
+  color: black;
+}
+
+.leftbar_profile_name {
+  margin-left: -70px;
+}
+
+.link_3 {
+  margin-left: -60px;
+  text-decoration: none;
+  color: black;
+}
+
+.leftbar_profile_pic {
+  float: left;
+  margin-top: -10px;
+  width: 40px;
+  height: 40px;
+}
+
+/*Third Part--- .blue div*/
+.blue {
+  min-height: 670px;
+  height: 100%;
+  flex: 9;
+  background-color: #dee4e7;
+  position: sticky;
+  top: 0;
+}
+
+.blue::-webkit-scrollbar {
+  width: 5px;
+}
+
+.blue::-webkit-scrollbar-track {
+  background-color: #dee4e7;
+}
+
+.blue::-webkit-scrollbar-thumb {
+  background-color: darkgray;
+}
+
+.what_in_mind {
+  background-color: white;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 30px;
+  height: 100%;
+  border-radius: 10px;
+
+  margin-bottom: 50px;
+  
+}
+
+.trail{
+  display: flex;
+  flex-direction: column;
+}
+
+.what_in_mind_img {
+  float: left;
+  object-fit: cover;
+  margin-top: 30px;
+  margin-left: 10%;
+}
+
+.custom-file-upload {
+  font-weight: bold;
+  margin-top: 0px;
+  padding-left: 30px;
+  padding-top: 10px;
+  margin-left:5px;
+  cursor: pointer;
+}
+
+.post_profilePicture {
+  float: left;
+  margin-top: 30px;
+  margin-left: 25%;
+}
+
+.post_profileName {
+  margin-left: -40px;
+}
+
+.post_time {
+  margin-left: -40px;
+}
+
+h6 {
+  display: inline;
+  margin-top: 40px;
+  margin-left: -40px;
+  color: black;
+}
+
+textarea {
+  display: block;
+  margin-top: 40px;
+  height: 30px;
+  margin-left: -50px;
+  width: 80%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+textarea:focus {
+  margin-top: 20px;
+  height: 120px;
+  background-color: #dee4e7;
+}
+
+textarea:focus::placeholder {
+  visibility: hidden;
+}
+
+.what_in_mind_button {
+  height: 50px;
+  width: 140px;
+  float: left;
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.what_in_mind_button:hover {
+  background-color: lightblue;
+}
+
+.blue_div_1{
+  width: 100%;
+  display:flex;
+  flex-direction: row;
+}
+
+.what_in_mind .div {
+  display: flex;
+  width: 100%;
+
+}
+
+.share_button {
+  background-color: lightgreen;
+}
+
+.share_button:hover {
+  background-color: rgb(24, 160, 24);
+  color: white;
+}
+
+.blue_button {
+  height: 50px;
+  margin-top: 220px;
+  float: left;
+  background-color: lightgreen;
+}
+
+.post {
+  height: 100%;
+  margin-top: 20px;
+  background-color: white;
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 50px;
+}
+
+.post_2 {
+  display: flex;
+}
+
+h3 {
+  margin-top: 20px;
+  margin-left: 40px;
+  font-weight: lighter;
+  margin-bottom: 40px;
+}
+
+h5 {
+  margin-top: 30px;
+  margin-left: -60px;
+  margin-bottom: 0px;
+}
+
+h6 {
+  margin-left: -60px;
+  font-weight: lighter;
+}
+
+.post_image {
+  height: 500px;
+  margin-right: 5%;
+  width: 90%;
+  object-fit: cover;
+  border-radius: 0px;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  border-radius: 5px;
+}
+
+.post_description {
+  width: 90%;
+}
+
+.no_image {
+  visibility: hidden;
+}
+
+.three_dot_button {
+  background-color: transparent;
+  outline: none;
+  margin-left: 400px;
+  display: inline;
+  margin-top: -600px;
+}
+
+/*Fourth Part --- .green div*/
+.green {
+  flex: 4.5;
+  background-color: #dee4e7;
+  height: 670px;
+  overflow-y: hidden;
+  scrollbar-width: 5px;
+  position: sticky;
+  top: 85px;
+}
+
+.green:hover {
+  overflow-y: scroll;
+}
+
+.green::-webkit-scrollbar {
+  width: 5px;
+}
+
+.green::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.green::-webkit-scrollbar-thumb {
+  background-color: darkgray;
+}
+
+.endbar_heading {
+  margin-left: 15px;
+  margin-top: 30px;
+  font-weight: normal;
+}
+
+.ad_image {
+  border-radius: 10px;
+  object-fit: fill;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  margin-top: 5px;
+  margin-right: 30px;
+  opacity: 0.7;
+  z-index: 99;
+}
+
+.green_hr {
+  margin-top: 380px;
+  z-index: 100;
+}
+
+.green_h5 {
+  margin-left: 30px;
+}
+
+.green_button {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+/*For Login Part*/
+
+.bigScreenLogin {
+  background-color: lightblue;
+  height: 100vh;
+  display: flex;
+}
+
+h1 {
+  font-weight: bolder;
+  color: blue;
+  margin-top: 300px;
+  margin-left: 275px;
+}
+
+.login_page_h3 {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  font-weight: normal;
+  width: 450px;
+  margin-left: 175px;
+}
+
+.mainLogin {
+  border-radius: 10px;
+  height: 500px;
+  width: 410px;
+  margin-left: 100px;
+  margin-top: 150px;
+  background-color: white;
+}
+
+h2 {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  color: blue;
+  font-weight: bolder;
+  margin-left: 140px;
+  margin-top: 30px;
+}
+
+label {
+  margin-left: 35px;
+  color: black;
+  margin-top: 20px;
+}
+
+.email_input {
+  border-radius: 5px;
+  background-color: white;
+  border: 2px solid black;
+  margin-left: 30px;
+  width: 350px;
+  margin-top: 5px;
+}
+
+.email_input:focus {
+  background-color: lightblue;
+}
+
+.login_button {
+  margin-top: 40px;
+  width: 350px;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: 2px solid black;
+  color: black;
+  outline: none;
+}
+
+.login_button:hover {
+  background-color: blue;
+  border: 2px solid transparent;
+  color: white;
+}
+
+.forget_password_button {
+  margin-left: 135px;
+}
+
+.create_new_account {
+  margin-top: 20px;
+  width: 250px;
+  margin-left: 80px;
+  margin-bottom: 20px;
+  background-color: white;
+  border: 2px solid black;
+  color: black;
+}
+
+.create_new_account:hover {
+  background-color: green;
+  border: 2px solid transparent;
+  color: white;
+}
+
+.link_create_account {
+  text-decoration: none;
+  color: black;
+}
+
+.link_create_account:hover {
+  color: white;
+}
+
+/*For SIgnup*/
+
+.mainSignup {
+  border-radius: 10px;
+  height: 600px;
+  width: 410px;
+  margin-left: 100px;
+  margin-top: 100px;
+  background-color: white;
+}
+
+.signup_button:hover {
+  background-color: green;
+}
+
+.already_account {
+  margin-left: 100px;
+}
+
+.link_already_account {
+  text-decoration: none;
+  color: black;
+}
+
+.link_already_account:hover {
+  color: black;
+}
+
+/*Profile*/
+
+.for_profile {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.coverImg {
+  width: 90%;
+  margin-left: 5%;
+  height: 300px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+}
+
+.profileImg {
+  margin-left: auto;
+  margin-right: auto;
+  height: 175px;
+  width: 175px;
+  margin-top: -130px;
+  border: 3px solid #dee4e7;
+}
+
+.profileImg_Name {
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bolder;
+  margin-top: 5px;
+}
+
+.profileImg_desc {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -5px;
+  margin-bottom: 15px;
+  font-weight: normal;
+}
+
+.follow-button {
+  width: 200px;
+  background-color: lightblue;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.unfollow-button {
+  width: 200px;
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.unfollow-button:hover {
+  background-color: white;
+}
+
+.no-edit-button {
+  display: none;
+}
+
+/*For Messenger*/
+.chatters-header {
+  background-color: transparent;
+}
+
+.chatters-header-part {
+  margin-left: 60px;
+  margin-top: 10px;
+  font-weight: bolder;
+}
+
+.chat-messge-header {
+  width: 100%;
+  height: 68px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #dee4e7;
+}
+
+.messenger-red,
+.messenger-blue {
+  display: flex;
+  flex-direction: column;
+}
+
+.messenger-blue {
+  height: 525px;
+  overflow: scroll;
+  scrollbar-width: 5px;
+}
+
+.messenger-blue::-webkit-scrollbar {
+  width: 5px;
+}
+
+.messager-blue::-webkit-scrollbar-track {
+  background-color: #dee4e7;
+}
+
+.messenger-blue::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+}
+
+.messenger-middle-part {
+  color: grey;
+  font-weight: bolder;
+  opacity: 0.4;
+  margin-top: 100px;
+  margin-left: 50px;
+}
+
+.messages {
+  float: left;
+  margin-left: 15px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  z-index: 1;
+}
+
+.messages_right {
+  margin-right: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row-reverse;
+  z-index: 1;
+}
+
+.messages_right .img_message_part {
+  display: none;
+}
+
+.img_message_part {
+  margin-top: auto;
+  z-index: 1;
+}
+
+.message-part,
+.messenger-red {
+  border-right: 1px solid gray;
+}
+
+.receiver-chat-header {
+  padding: 1px;
+  margin-top: 10px;
+  margin-bottom: 1px;
+}
+
+.receiver-chat-header:hover {
+  background-color: transparent;
+}
+
+.message_text {
+  max-width: 500px;
+  height: auto + 500px;
+  margin-left: -70px;
+  margin-top: auto;
+  border: 1px solid transparent;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background-color: white;
+}
+
+.message_text_right {
+  max-width: 500px;
+  height: auto + 500px;
+  margin-left: -70px;
+  margin-top: auto;
+  border: 1px solid transparent;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background-color: lightblue;
+}
+
+.do_messages {
+  position: fixed;
+  bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-left: 80px;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  z-index: 100;
+}
+
+.send_message_button {
+  width: auto;
+  height: 50px;
+  border: 1px solid red;
+  background-color: red;
+  margin-top: 50px;
+}
+
+.type_message {
+  position: sticky;
+  height: 100px;
+  margin-top: 30px;
+  background-color: white;
+  border: 1px solid black;
+  padding: 10px;
+  z-index: 100;
+}
+
+.type_message:focus {
+  height: 100px;
+  margin-top: 30px;
+}
+
+.receiver-info {
+  position: fixed;
+  margin-top: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  float: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.receiver-img {
+  margin-left: auto;
+  margin-right: auto;
+  height: 150px;
+  width: 150px;
+}
+
+.receiver-name {
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bold;
+}
+
+
+/*For Responsive*/
+
+@media only screen and (max-width: 1440px) {
+  .red{
+    height: 735px;
+  }
+  .green{
+    height: 735px;
+  }
+  input{
+    margin-left: 200px;
+  }
+  .first{
+    margin-left:950px;
+  }
+
+  textarea {
+    display: block;
+    margin-top: 40px;
+    height: 30px;
+    
+    width: 80%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .what_in_mind_button{
+    margin-top: 40px;
+  }
+ 
+}
+
+@media only screen and (max-width: 1410px){
+ .what_in_mind_button{
+  width: 130px;
+ } 
+ button{
+  margin-left:30px;
+ }
+ input{
+  width:400px;
+  margin-left: 70px;
+ }
+ .first{
+  margin-left: 750px;
+ }
+
+ .header_image{
+  margin-top:-10px;
+ }
+
+}
+
+@media only screen and (max-width: 1100px){
+  .what_in_mind_button{
+   width: 130px;
+  } 
+  button{
+   margin-left:30px;
+  }
+
+  ul{
+    margin-left: -30px;
+  }
+
+  .blue{
+    width: 100px;
+  }
+ }
+ @media only screen and (max-width: 925px){
+  .feed{
+    background-color: transparent;
+  text-align: left;
+  padding: 15px;
+  margin-left: -15px;
+  width: 300px;
+  }
+ }
+
+
+/*@media only screen and (max-width: 1060px){
+  .what_in_mind_button{
+   width: 130px;
+  } 
+  button{
+   margin-left:30px;
+  }
+  .red{
+    flex:6;
+  }
+
+  .blue{
+    flex:8;
+  }
+ }*/
+ 
+ 
+

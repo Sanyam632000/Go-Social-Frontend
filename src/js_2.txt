@@ -1,0 +1,139 @@
+import React,{useState,useEffect} from "react";
+import ReactDom from "react-dom";
+import {FaUserAlt,FaBookmark,FaQuestion,FaGraduationCap} from "react-icons/fa"
+import {MdMessage,MdNotifications,MdOutlineRssFeed,MdOutlineChatBubble,MdVideocam,MdOutlineGroups,MdWorkOutline,MdEventBusy,MdPhotoSizeSelectActual,MdLocationPin,MdOutlineEmojiEmotions} from "react-icons/md"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router,Routes, Route,Link } from "react-router-dom"
+import person from './person.jpeg'
+import kp from './kp.jpg'
+
+import './App.css';
+
+function App() {
+
+ 
+
+  return <>
+      <Router>
+
+          <div className='containe'>
+            <div className='header'>
+              
+              <h1 className='h1left'>GO Social</h1>
+              <input type="text" placeholder="  Search for friend, post or video"/> 
+              
+              <ul> 
+                  <li className='first'><Link to="/" className='link'>HomePage</Link></li>
+                  <li><Link to="/" className='link'>TimeLine</Link></li>
+                  <li><Link to="/" className='link'><FaUserAlt fontSize={20}/><span class="osition-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9</span></Link></li>
+                  <li><Link to="/" className='link'><MdMessage fontSize={20}/> <span class="osition-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9</span> </Link></li>
+                  <li><Link to="/" className='link'><MdNotifications fontSize={25}/> <span class="osition-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9</span> </Link></li>
+                  <li><img src={person}></img></li>
+            </ul> 
+
+          </div>
+
+          <div id="main">
+
+            <div class='red' >
+
+              <ul>
+              <button className="feed"><Link to='/' className="link_2"> <MdOutlineRssFeed/> Feed </Link></button>
+              <button className="feed"><Link to='/' className="link_2"> <MdOutlineChatBubble/> Chat </Link></button>
+              <button className="feed"><Link to='/' className="link_2"> <MdVideocam/> Video </Link></button>
+              <button className="feed"><Link to='/' className="link_2"> <MdOutlineGroups/> Groups </Link></button>
+              <button className="feed"><Link to='/' className="link_2"> <FaBookmark/> Bookmarks </Link></button>
+              <button className="feed"><Link to='/' className="link_2"> <FaQuestion/> Questions </Link></button>
+              <button className="feed"><Link to='/' className="link_2"> <MdWorkOutline/> Jobs </Link></button>
+              <button className="feed"><Link to='/' className="link_2"> <MdEventBusy/> Events </Link></button>
+              <button className="feed"><Link to='/' className="link_2"> <FaGraduationCap/> Courses </Link></button>
+              </ul>
+
+              <button className="btn-outline">Show More</button>
+              <hr/>
+
+              <ul>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Kein </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Kevin Pieterson </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                 <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                <button className="feed"><Link to='/' className="link_3"> <img src={person} className="all_other"/> Saiful Zaffar </Link></button>
+                
+            
+              </ul>
+            </div>
+
+
+            <div class='blue'>
+
+                <div className="what_in_mind">
+                  <img src={person} className="what_in_mind_img"/>
+                  <textarea maxLength={200} placeholder="What's in your mind?" ></textarea>
+                
+                    <div className="div">
+                      <button className="what_in_mind_button"><MdPhotoSizeSelectActual/> Photos</button>
+                      <button className="what_in_mind_button"><MdLocationPin/> Location</button>
+                      <button className="what_in_mind_button"><MdOutlineEmojiEmotions/> Feeling</button>
+                      <button className="what_in_mind_button">Share</button>
+                    </div>
+
+                </div>
+
+                <div className="post">
+
+                 <div className="post_2"> 
+                  <img src={person} className="what_in_mind_img"/>
+                    <div>
+                    <h5>Saiful Zaffar</h5>
+                    <h6>5 min ago</h6>
+                    </div>
+                </div> 
+               
+               <h3>Hello Guys...This is my first post on GOSocial. Please Follow me...</h3>
+
+               <img src={kp} className="post_image"></img>
+
+              
+                
+                </div>
+
+               
+
+
+            </div>  
+
+
+
+
+
+
+
+
+            <div class='green'></div>
+          </div>
+          
+</div>  
+
+    </Router>
+
+         </>
+   
+  
+}
+
+export default App;
