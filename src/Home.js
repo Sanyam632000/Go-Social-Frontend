@@ -267,7 +267,7 @@ const Home =() =>{
        </div> 
                
        <h3 className="post_description">{description}</h3>
-       <img src={img?"http://localhost:3030/images/"+img:""} className={img?"post_image":"no_image"}></img> 
+       <img src={img?"http://localhost:3030/image/"+img:""} className={img?"post_image":"no_image"}></img> 
                 
      </div>
 
