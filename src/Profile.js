@@ -12,7 +12,6 @@ import { AuthContext } from "./AuthContext";
 import {BsThreeDots} from "react-icons/bs"
 
 
-
 const Profile =() =>{
 
     let {_id} = useParams()
@@ -21,7 +20,8 @@ const Profile =() =>{
     const [allUsers,setAllUsers] = useState([]);
     const account_profile_pic = user_detail.profilePicture;
     const [profile_pic,setProfile_pic] = useState();
-    const [description,setDescription] = useState();
+    const description = useRef();
+    const [userdescription,setUserDescription] = useState();
     const [username,setUsername] = useState();
     const [user,setUser] = useState([]);
     const [mypost,setMypost] = useState([]);
@@ -42,14 +42,16 @@ const Profile =() =>{
     useEffect(() => {  
       const fetchUserFollowing =async()=>{ 
         const res = await axios.get(`http://localhost:3030/${_id}/getfollowing`) 
+        console.log(res.data)
         setUser(res.data)    
         const res_2 = await axios.get(`http://localhost:3030/${_id}`) 
+        console.log(res_2.data)
         const profile_picture = res_2.data[0].profilePicture
         const desc = res_2.data[0].description
         const name = res_2.data[0].username      
         setUsername(name)
         setProfile_pic(profile_picture)
-        setDescription(desc)     
+        setUserDescription(desc)     
       }
   
       fetchUserFollowing();
@@ -192,7 +194,7 @@ const Profile =() =>{
           <img src ="https://raw.githubusercontent.com/safak/youtube/react-social-ui/public/assets/post/3.jpeg" className="coverImg"/>
           <img src ={profile_pic} className="profileImg"/>
           <h2 className="profileImg_Name">{username}</h2>
-          <h6 className="profileImg_desc">{description}</h6>
+          <h6 className="profileImg_desc">{userdescription}</h6>
           <button className={isfollow?"follow-button":"unfollow-button"} onClick={follow_unfollow}>{isfollow?"UnFollow":"Follow"}</button>
           <button className={canEdit?"unfollow-button":"no-edit-button"}>Edit Profile</button>
         </div>
@@ -215,7 +217,7 @@ const Profile =() =>{
                   <div className="trail">
                     <div className="blue_div_1">
                     <Link to={`/profile/${_id}`}><img src={account_profile_pic} className="what_in_mind_img"/></Link>
-                  <textarea maxLength={200} ref={description} placeholder="What's in your mind?" ></textarea>
+                  <textarea maxLength={200}  placeholder="What's in your mind?" ref={description} ></textarea>
                     </div>
                        
                       
@@ -312,7 +314,7 @@ const EndBar =({profilePicture,username,_id})=>{
        </div> 
                
        <h3 className="post_description">{description}</h3>
-       <img src={img?"http://localhost:3030/images/"+img:""} className={img?"post_image":"no_image"}></img> 
+       <img src={img?"http://localhost:3030/image/"+img:""} className={img?"post_image":"no_image"}></img> 
                 
      </div>
 
