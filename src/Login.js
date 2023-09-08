@@ -32,7 +32,7 @@ const Login =()=>{
                   <form onSubmit={handleClick}>
                     <h2>GoSocial</h2>
                     <label>Email</label>
-                    <input type="email" placeholder="Email" className="email_input" required ref={email}/>
+                    <input type="email" placeholder="Emails" className="email_input" required ref={email}/>
                     <label>Password</label>
                     <input type="password" placeholder="Password" minLength="6"  className="email_input" required ref={password}/>
                     <button className="btn btn-primary login_button">{isFetching? "Loading" :"Login"}</button>
