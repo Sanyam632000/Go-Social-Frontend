@@ -38,7 +38,7 @@ const Home =() =>{
     //Here in useEffect, fetchPost method store posts of send userid(in axios) in post array...It uses axios method to use postman method...
     useEffect(() => {
       const fetchPost = async() =>{
-        const res = await axios.get(`http://localhost:3030/post/timeline/${id}`);
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/post/timeline/${id}`);
     //arrange post in ascending order according to time...
         setPosts(res.data.sort((p1,p2) =>{
         return new Date(p2.updatedAt) - new Date(p1.updatedAt)
@@ -51,7 +51,7 @@ const Home =() =>{
     //Get Friends of the user
     useEffect(() => {
       const fetchUserFollowing =async()=>{
-        const res = await axios.get(`http://localhost:3030/${id}/getfollowing`) 
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${id}/getfollowing`) 
         setUser(res.data)   
       }
       fetchUserFollowing();
@@ -60,7 +60,7 @@ const Home =() =>{
     //Get BirthDay Boy
     useEffect(()=>{
         const fetchBirthDayBoy =async()=>{
-            const res = await axios.get("http://localhost:3030/get/birthday_boy")
+            const res = await axios.get("${process.env.REACT_APP_BACKEND_URL}/get/birthday_boy")
             
             for(var i=0;i<res.data.length;i++){
                 console.log(res.data[i].username)
@@ -76,7 +76,7 @@ const Home =() =>{
     //Get All the user in mongo database...
     useEffect(() => {
       const fetchAllUsers = async() =>{
-        const res = await axios.get("http://localhost:3030/get_all_users")
+        const res = await axios.get("${process.env.REACT_APP_BACKEND_URL}/get_all_users")
         console.log(res.data)
         setAllUsers(res.data)
       }
@@ -101,13 +101,13 @@ const Home =() =>{
          newPost.img = fileName
         
          try{ 
-            await axios.post("http://localhost:3030/post/upload",data)
+            await axios.post("${process.env.REACT_APP_BACKEND_URL}/post/upload",data)
             
          }catch(err){}
        }
   
        try{
-          await axios.post("http://localhost:3030/post/create",newPost)   
+          await axios.post("${process.env.REACT_APP_BACKEND_URL}/post/create",newPost)   
          
           window.location.reload()
          
@@ -245,7 +245,7 @@ const Home =() =>{
 
     useEffect(() => {
       const fetchUser =async()=>{
-        const res = await axios.get(`http://localhost:3030/${userId}`)  
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${userId}`)  
         setUser(res.data[0])
         
       }
@@ -267,7 +267,7 @@ const Home =() =>{
        </div> 
                
        <h3 className="post_description">{description}</h3>
-       <img src={img?"http://localhost:3030/image/"+img:""} className={img?"post_image":"no_image"}></img> 
+       <img src={img?"${process.env.REACT_APP_BACKEND_URL}/image/"+img:""} className={img?"post_image":"no_image"}></img> 
                 
      </div>
 

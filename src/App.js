@@ -49,13 +49,13 @@ const ChatFriends =({members})=>{
 
    useEffect(() =>{
     const fetchFriendId =async()=>{
-      const res = await axios.get(`http://localhost:3030/conversation/${id}`)
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/conversation/${id}`)
       const len = res.data.length
 
         for(var i=0;i<len;i++){
           for(var j=0;j<2;j++) {
             if(members[j] !== id){
-              const res_2 = await axios.get(`http://localhost:3030/${members[j]}`)
+              const res_2 = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${members[j]}`)
               setChatter_Profile_Pic(res_2.data[i].profilePicture)
               setUsername(res_2.data[i].username)
             }
@@ -107,7 +107,7 @@ const Messenger=()=>{
 
   useEffect(() =>{
     const getConversation =async()=>{
-      const res = await axios.get(`http://localhost:3030/conversation/${id}`)
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/conversation/${id}`)
       setConversation(res.data)
      // const len = conversation.length   
      // console.log(res.data) 
@@ -119,12 +119,12 @@ const Messenger=()=>{
   
   useEffect(() => {
     const fetchMessages =async()=>{
-      const res = await axios.get(`http://localhost:3030/message/getMessage/${currentChat._id}`) 
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/message/getMessage/${currentChat._id}`) 
       setMessage(res.data)
 
       for(let i=0;i<2;i++){
         if(currentChat.members[i] !== id){
-          const res_2 = await axios.get(`http://localhost:3030/${currentChat.members[i]}`)
+          const res_2 = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${currentChat.members[i]}`)
           setChatter_Name(res_2.data[0].username)
           setChatter_Pic(res_2.data[0].profilePicture)
           setChatter_Id(res_2.data[0]._id)  
@@ -138,7 +138,7 @@ const Messenger=()=>{
   //Get Friends
   useEffect(() => {
     const fetchUserFollowing =async()=>{
-      const res = await axios.get(`http://localhost:3030/${id}/getfollowing`) 
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${id}/getfollowing`) 
       setFriendsChatter(res.data)   
     }
     fetchUserFollowing();
@@ -170,7 +170,7 @@ const Messenger=()=>{
     console.log(notifications)
 
     try{
-      const res = await axios.post("http://localhost:3030/message/",newMessage);    
+      const res = await axios.post("${process.env.REACT_APP_BACKEND_URL}/message/",newMessage);    
       setMessage([...message,res.data]) ;  
       text.current.value=""     
    }
@@ -321,7 +321,7 @@ export default App;
   //Here in useEffect, fetchPost method store posts of send userid(in axios) in post array...It uses axios method to use postman method...
   useEffect(() => {
     const fetchPost = async() =>{
-      const res = await axios.get(`http://localhost:3030/post/timeline/${id}`);
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/post/timeline/${id}`);
   //arrange post in ascending order according to time...
       setPosts(res.data.sort((p1,p2) =>{
       return new Date(p2.updatedAt) - new Date(p1.updatedAt)
@@ -334,7 +334,7 @@ export default App;
   //Get Friends of the user
   useEffect(() => {
     const fetchUserFollowing =async()=>{
-      const res = await axios.get(`http://localhost:3030/${id}/getfollowing`) 
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${id}/getfollowing`) 
       setUser(res.data)   
     }
     fetchUserFollowing();
@@ -344,7 +344,7 @@ export default App;
   //Get All the user in mongo database...
   useEffect(() => {
     const fetchAllUsers = async() =>{
-      const res = await axios.get("http://localhost:3030/get_all_users")
+      const res = await axios.get("${process.env.REACT_APP_BACKEND_URL}/get_all_users")
       setAllUsers(res.data)
     }
     fetchAllUsers();
@@ -368,13 +368,13 @@ export default App;
        newPost.img = fileName
       
        try{ 
-          await axios.post("http://localhost:3030/post/upload",data)
+          await axios.post("${process.env.REACT_APP_BACKEND_URL}/post/upload",data)
           
        }catch(err){}
      }
 
      try{
-        await axios.post("http://localhost:3030/post/create",newPost)   
+        await axios.post("${process.env.REACT_APP_BACKEND_URL}/post/create",newPost)   
        
         window.location.reload()
        
@@ -504,7 +504,7 @@ const EndBar =({profilePicture,username,_id})=>{
 
     useEffect(() => {
       const fetchUser =async()=>{
-        const res = await axios.get(`http://localhost:3030/${userId}`)  
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${userId}`)  
         setUser(res.data[0])
         
       }
@@ -526,7 +526,7 @@ const EndBar =({profilePicture,username,_id})=>{
        </div> 
                
        <h3 className="post_description">{description}</h3>
-       <img src={img?"http://localhost:3030/images/"+img:""} className={img?"post_image":"no_image"}></img> 
+       <img src={img?"${process.env.REACT_APP_BACKEND_URL}/images/"+img:""} className={img?"post_image":"no_image"}></img> 
                 
      </div>
 
@@ -592,7 +592,7 @@ const Signup =()=>{
       }
 
       try{
-        await axios.post("http://localhost:3030/registers",user);
+        await axios.post("${process.env.REACT_APP_BACKEND_URL}/registers",user);
         history("/login")
       }
       catch(err){
@@ -649,7 +649,7 @@ const Profile =() =>{
 
   useEffect(() => {
     const fetchAllUsers = async() =>{
-      const res = await axios.get("http://localhost:3030/get_all_users")
+      const res = await axios.get("${process.env.REACT_APP_BACKEND_URL}/get_all_users")
       setAllUsers(res.data)
     }
 
@@ -659,9 +659,9 @@ const Profile =() =>{
 
   useEffect(() => {  
     const fetchUserFollowing =async()=>{ 
-      const res = await axios.get(`http://localhost:3030/${_id}/getfollowing`) 
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${_id}/getfollowing`) 
       setUser(res.data)    
-      const res_2 = await axios.get(`http://localhost:3030/${_id}`) 
+      const res_2 = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${_id}`) 
       const profile_picture = res_2.data[0].profilePicture
       const desc = res_2.data[0].description
       const name = res_2.data[0].username      
@@ -676,7 +676,7 @@ const Profile =() =>{
 
   useEffect(() => {
     const fetchMyPost =async()=>{
-      const res = await axios.get(`http://localhost:3030/post/user/${_id}`) 
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/post/user/${_id}`) 
       setMypost(res.data.sort((p1,p2) =>{
         return new Date(p2.updatedAt) - new Date(p1.updatedAt)
       }))
@@ -692,20 +692,20 @@ const Profile =() =>{
     console.log(isfollow)
     try{
       if(isfollow){
-        await axios.put(`http://localhost:3030/${_id}/unfollow`,{userId:user_detail._id})
-        await axios.delete(`http://localhost:3030/conversation/${user_detail._id}/${_id}`)
+        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/${_id}/unfollow`,{userId:user_detail._id})
+        await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/conversation/${user_detail._id}/${_id}`)
         dispatch({type:"UNFOLLOW",payload: user._id})
         
       }
       else{
-        await axios.put(`http://localhost:3030/${_id}/follow`,{userId:user_detail._id})
+        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/${_id}/follow`,{userId:user_detail._id})
 
         const newConversation ={
           senderId:user_detail._id,
           receiverId: _id
         }
         console.log(newConversation)
-        const res = await axios.post("http://localhost:3030/conversation/",newConversation)    
+        const res = await axios.post("${process.env.REACT_APP_BACKEND_URL}/conversation/",newConversation)    
         dispatch({type:"FOLLOW",payload: user._id})
       }
       setisFollow(!isfollow)   

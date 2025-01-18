@@ -31,7 +31,7 @@ const Profile =() =>{
   
     useEffect(() => {
       const fetchAllUsers = async() =>{
-        const res = await axios.get("http://localhost:3030/get_all_users")
+        const res = await axios.get("${process.env.REACT_APP_BACKEND_URL}/get_all_users")
         setAllUsers(res.data)
       }
   
@@ -41,10 +41,10 @@ const Profile =() =>{
   
     useEffect(() => {  
       const fetchUserFollowing =async()=>{ 
-        const res = await axios.get(`http://localhost:3030/${_id}/getfollowing`) 
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${_id}/getfollowing`) 
         console.log(res.data)
         setUser(res.data)    
-        const res_2 = await axios.get(`http://localhost:3030/${_id}`) 
+        const res_2 = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${_id}`) 
         console.log(res_2.data)
         const profile_picture = res_2.data[0].profilePicture
         const desc = res_2.data[0].description
@@ -60,7 +60,7 @@ const Profile =() =>{
   
     useEffect(() => {
       const fetchMyPost =async()=>{
-        const res = await axios.get(`http://localhost:3030/post/user/${_id}`) 
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/post/user/${_id}`) 
         setMypost(res.data.sort((p1,p2) =>{
           return new Date(p2.updatedAt) - new Date(p1.updatedAt)
         }))
@@ -75,20 +75,20 @@ const Profile =() =>{
   
       try{
         if(isfollow){
-          await axios.put(`http://localhost:3030/${_id}/unfollow`,{userId:user_detail._id})
-          await axios.delete(`http://localhost:3030/conversation/${user_detail._id}/${_id}`)
+          await axios.put(`${process.env.REACT_APP_BACKEND_URL}/${_id}/unfollow`,{userId:user_detail._id})
+          await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/conversation/${user_detail._id}/${_id}`)
           dispatch({type:"UNFOLLOW",payload: user._id})
           
         }
         else{
-          await axios.put(`http://localhost:3030/${_id}/follow`,{userId:user_detail._id})
+          await axios.put(`${process.env.REACT_APP_BACKEND_URL}/${_id}/follow`,{userId:user_detail._id})
   
           const newConversation ={
             senderId:user_detail._id,
             receiverId: _id
           }
           console.log(newConversation)
-          const res = await axios.post("http://localhost:3030/conversation/",newConversation)    
+          const res = await axios.post("${process.env.REACT_APP_BACKEND_URL}/conversation/",newConversation)    
           dispatch({type:"FOLLOW",payload: user._id})
         }
         setisFollow(!isfollow)   
@@ -125,13 +125,13 @@ const Profile =() =>{
         newPost.img = fileName
        
         try{ 
-           await axios.post("http://localhost:3030/post/upload",data)
+           await axios.post("${process.env.REACT_APP_BACKEND_URL}/post/upload",data)
            
         }catch(err){}
       }
  
       try{
-         await axios.post("http://localhost:3030/post/create",newPost)   
+         await axios.post("${process.env.REACT_APP_BACKEND_URL}/post/create",newPost)   
         
          window.location.reload()
         
@@ -292,7 +292,7 @@ const EndBar =({profilePicture,username,_id})=>{
 
     useEffect(() => {
       const fetchUser =async()=>{
-        const res = await axios.get(`http://localhost:3030/${userId}`)  
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${userId}`)  
         setUser(res.data[0])
         
       }
@@ -314,7 +314,7 @@ const EndBar =({profilePicture,username,_id})=>{
        </div> 
                
        <h3 className="post_description">{description}</h3>
-       <img src={img?"http://localhost:3030/image/"+img:""} className={img?"post_image":"no_image"}></img> 
+       <img src={img?"${process.env.REACT_APP_BACKEND_URL}/image/"+img:""} className={img?"post_image":"no_image"}></img> 
                 
      </div>
 

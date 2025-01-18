@@ -29,7 +29,7 @@ const Signup =()=>{
         }
   
         try{
-          await axios.post("http://localhost:3030/registers",user);
+          await axios.post("${process.env.REACT_APP_BACKEND_URL}/registers",user);
           console.log("New User is Added...")
           history("/login")
         }
