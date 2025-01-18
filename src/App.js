@@ -39,6 +39,274 @@ function App() {
 }
 
 
+const ChatFriends =({members})=>{ 
+
+  const {user_detail} = useContext(AuthContext)
+  const id = user_detail._id 
+  const [chatter_profile_pic,setChatter_Profile_Pic] = useState()
+  const [username,setUsername] = useState()
+
+
+   useEffect(() =>{
+    const fetchFriendId =async()=>{
+      const res = await axios.get(`http://localhost:3030/conversation/${id}`)
+      const len = res.data.length
+
+        for(var i=0;i<len;i++){
+          for(var j=0;j<2;j++) {
+            if(members[j] !== id){
+              const res_2 = await axios.get(`http://localhost:3030/${members[j]}`)
+              setChatter_Profile_Pic(res_2.data[i].profilePicture)
+              setUsername(res_2.data[i].username)
+            }
+          }
+        }  
+      }  
+
+    fetchFriendId()
+   },[id])
+    
+  return<>
+         <button className="feed green_button" ><img src={chatter_profile_pic} className="all_other"/> {username}</button>
+        </>
+}
+
+
+const Message_Syntax =({text,senderId})=>{
+  const {user_detail} = useContext(AuthContext)
+  const profile_img = user_detail.profilePicture
+  const id = user_detail._id
+
+    
+  return<>
+          <div className={(senderId!==id)?"messages":"messages_right"}>
+              <img src={profile_img} className="img_message_part"></img>
+              <h6 className={(senderId==id)?"message_text_right":"message_text"}>{text}</h6> 
+          </div>
+        </>
+}
+
+
+
+
+const Messenger=()=>{
+  
+  const {user_detail} = useContext(AuthContext)
+  const id = user_detail._id;
+  const profile_img = user_detail.profilePicture
+  const text = useRef();
+  const scrollRef = useRef();
+  const [friendsChatter,setFriendsChatter] = useState()
+  const [conversation,setConversation] = useState([]);
+  const [chatter_pic,setChatter_Pic] = useState()
+  const [chatter_name,setChatter_Name] = useState()
+  const [chatter_id,setChatter_Id] = useState()
+  const [currentChat,setCurrentChat] = useState("")
+  const [message,setMessage] = useState([])
+  let [notifications,setNotifications] = useState(0)
+
+  useEffect(() =>{
+    const getConversation =async()=>{
+      const res = await axios.get(`http://localhost:3030/conversation/${id}`)
+      setConversation(res.data)
+     // const len = conversation.length   
+     // console.log(res.data) 
+    }
+
+    getConversation()
+  },[id])
+
+  
+  useEffect(() => {
+    const fetchMessages =async()=>{
+      const res = await axios.get(`http://localhost:3030/message/getMessage/${currentChat._id}`) 
+      setMessage(res.data)
+
+      for(let i=0;i<2;i++){
+        if(currentChat.members[i] !== id){
+          const res_2 = await axios.get(`http://localhost:3030/${currentChat.members[i]}`)
+          setChatter_Name(res_2.data[0].username)
+          setChatter_Pic(res_2.data[0].profilePicture)
+          setChatter_Id(res_2.data[0]._id)  
+        }
+      }
+    }
+
+    fetchMessages();
+  },[currentChat])
+ 
+  //Get Friends
+  useEffect(() => {
+    const fetchUserFollowing =async()=>{
+      const res = await axios.get(`http://localhost:3030/${id}/getfollowing`) 
+      setFriendsChatter(res.data)   
+    }
+    fetchUserFollowing();
+  },[id])
+
+  //OnClick Send Button for messenger...;
+  const sendText =async(e) =>{
+    e.preventDefault();
+   
+    const newMessage ={
+      chatId:  currentChat._id ,
+      senderId: user_detail._id,
+      text:text.current.value
+    }
+
+    socket.current.emit("sendMessage", {
+      userId: user_detail._id,
+      receiverId: currentChat.members.find(member => member !== user_detail._id),
+      text: text.current.value   
+    })
+
+    
+
+    socket.current.emit("sendNotification",{
+      userId: user_detail._id,
+      receiverId:currentChat.members.find(member => member !== user_detail._id),
+      notification:notifications++ 
+    })
+    console.log(notifications)
+
+    try{
+      const res = await axios.post("http://localhost:3030/message/",newMessage);    
+      setMessage([...message,res.data]) ;  
+      text.current.value=""     
+   }
+   catch(err){} 
+
+  }
+
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({behavior:"smooth"})
+  },[message])
+ 
+
+  //Socket Start and one function of socket in sendText function
+  const socket = useRef()
+  const [arrivalMessage,setArrivalMessage] = useState(null);
+
+
+  useEffect(() => {
+    socket.current = io("localhost:8900")
+    socket.current.on("getMessage", data => {
+      setArrivalMessage({
+        chatId:  currentChat._id ,
+        senderId: data.userId,
+        text: data.text
+      })
+    })
+
+    socket.current.on("getNotification", data => {
+      setNotifications(prev => [...prev,data])
+    })
+
+  },[socket])
+
+
+  useEffect(() => {
+    arrivalMessage && currentChat.members.includes(arrivalMessage.senderId) && setMessage((prev) => [...prev,arrivalMessage])
+  },[arrivalMessage,currentChat])
+
+
+  useEffect(() =>{
+    socket.current.emit("addUser", user_detail._id)
+  },[user_detail])
+
+  
+  return<>
+   <div className='containe'> 
+
+   <div className='header'>
+    <h1 className='h1left'> GoSocial </h1>
+      <input type="text" placeholder="  Search for friend, post or video"/> 
+
+      <ul> 
+          <li className='first'><Link to="/" className='link'>HomePage</Link></li>
+          <li><Link to="/" className='link'>TimeLine</Link></li>
+          <li><Link to="/" className='link'><FaUserAlt fontSize={20}/><span className="osition-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9</span></Link></li>
+          <li><Link to="/" className='link'><MdMessage fontSize={20}/> <span className="osition-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9</span> </Link></li>
+          <li><Link to="/" className='link'><MdNotifications fontSize={25}/> <span className="osition-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9</span> </Link></li>
+          <li><Link to={`/profile/${id}`}><img src={profile_img} className="header_image"></img></Link></li>
+          
+    </ul> 
+
+    </div>
+
+
+    <div id="main">                                                                          
+
+
+            <div className='red messenger-red' >                                                                  
+              <div className="chatters-header">
+                  <h3 className="chatters-header-part">MY FRIENDS</h3>
+
+                    {conversation.map((c) => {
+                      return<>
+                        <div onClick={()=>setCurrentChat(c)}>
+                          <ChatFriends key={c._id} {...c}/>
+                        </div>
+                        </>
+                    })}   
+              
+              </div>
+            </div>                                                                                    
+
+
+
+          <div className='blue message-part '>      
+           
+
+            <div className="messenger-blue">
+                  <div className="chat-messge-header">
+                  <button className="feed green_button receiver-chat-header"><Link to="/" className="link_3"> <img src={chatter_pic} className="all_other"/> {chatter_name} </Link></button>
+                  <hr/>
+                  </div>
+
+                  {currentChat?<>{message.map((msg) => {
+                          return(
+                            <div ref={scrollRef}>
+                              <Message_Syntax key={msg._id} {...msg} />
+                            </div>
+                          )
+                        })}</>:<h1>No Chats</h1>} 
+
+                      
+            </div>
+            
+              <form className="do_messages" onSubmit={sendText}>
+                  <textarea className="type_message" ref={text} placeholder="Write something..."></textarea>
+                  <button className="btn send_message_button">Send</button>
+              </form> 
+
+          </div>                                                                                       
+
+
+
+          <div className='green'>  
+            
+            <div className="receiver-info">
+             <img src={chatter_pic} className="receiver-img"></img>
+              <Link to={`/profile/${chatter_id}`}><button><h3 className="receiver-name">{chatter_name}</h3></button></Link>
+            </div>                                                     
+
+          </div>                                                                                      
+
+
+  </div> 
+  </div>       
+        </>
+}
+
+
+export default App;
+
+
+
+
+
 /*const Home =() =>{
 
   const [posts,setPosts] = useState([]);
@@ -228,37 +496,6 @@ const EndBar =({profilePicture,username,_id})=>{
 
 }*/
 
-const ChatFriends =({members})=>{ 
-
-  const {user_detail} = useContext(AuthContext)
-  const id = user_detail._id 
-  const [chatter_profile_pic,setChatter_Profile_Pic] = useState()
-  const [username,setUsername] = useState()
-
-
-   useEffect(() =>{
-    const fetchFriendId =async()=>{
-      const res = await axios.get(`http://localhost:3030/conversation/${id}`)
-      const len = res.data.length
-
-        for(var i=0;i<len;i++){
-          for(var j=0;j<2;j++) {
-            if(members[j] !== id){
-              const res_2 = await axios.get(`http://localhost:3030/${members[j]}`)
-              setChatter_Profile_Pic(res_2.data[i].profilePicture)
-              setUsername(res_2.data[i].username)
-            }
-          }
-        }  
-      }  
-
-    fetchFriendId()
-   },[id])
-    
-  return<>
-         <button className="feed green_button" ><img src={chatter_profile_pic} className="all_other"/> {username}</button>
-        </>
-}
 
 /*const Post =({description,img,userId,updatedAt}) =>{
 
@@ -595,235 +832,4 @@ const Profile =() =>{
   )
 }
 */
-
-
-const Message_Syntax =({text,senderId})=>{
-  const {user_detail} = useContext(AuthContext)
-  const profile_img = user_detail.profilePicture
-  const id = user_detail._id
-
-    
-  return<>
-          <div className={(senderId!==id)?"messages":"messages_right"}>
-              <img src={profile_img} className="img_message_part"></img>
-              <h6 className={(senderId==id)?"message_text_right":"message_text"}>{text}</h6> 
-          </div>
-        </>
-}
-
-
-
-
-const Messenger=()=>{
-  
-  const {user_detail} = useContext(AuthContext)
-  const id = user_detail._id;
-  const profile_img = user_detail.profilePicture
-  const text = useRef();
-  const scrollRef = useRef();
-  const [friendsChatter,setFriendsChatter] = useState()
-  const [conversation,setConversation] = useState([]);
-  const [chatter_pic,setChatter_Pic] = useState()
-  const [chatter_name,setChatter_Name] = useState()
-  const [chatter_id,setChatter_Id] = useState()
-  const [currentChat,setCurrentChat] = useState("")
-  const [message,setMessage] = useState([])
-  let [notifications,setNotifications] = useState()
-
-
-  useEffect(() =>{
-    const getConversation =async()=>{
-      const res = await axios.get(`http://localhost:3030/conversation/${id}`)
-      setConversation(res.data)
-      const len = conversation.length   
-      console.log(res.data) 
-    }
-
-    getConversation()
-  },[id])
-
-  
-  useEffect(() => {
-    const fetchMessages =async()=>{
-      const res = await axios.get(`http://localhost:3030/message/getMessage/${currentChat._id}`) 
-      setMessage(res.data)
-
-      for(let i=0;i<2;i++){
-        if(currentChat.members[i] !== id){
-          const res_2 = await axios.get(`http://localhost:3030/${currentChat.members[i]}`)
-          setChatter_Name(res_2.data[0].username)
-          setChatter_Pic(res_2.data[0].profilePicture)
-          setChatter_Id(res_2.data[0]._id)  
-        }
-      }
-    }
-
-    fetchMessages();
-  },[currentChat])
- 
-  //Get Friends
-  useEffect(() => {
-    const fetchUserFollowing =async()=>{
-      const res = await axios.get(`http://localhost:3030/${id}/getfollowing`) 
-      setFriendsChatter(res.data)   
-    }
-    fetchUserFollowing();
-  },[])
-
-  //OnClick Send Button for messenger...;
-  const sendText =async(e) =>{
-    e.preventDefault();
-   
-    const newMessage ={
-      chatId:  currentChat._id ,
-      senderId: user_detail._id,
-      text:text.current.value
-    }
-
-    socket.current.emit("sendMessage", {
-      userId: user_detail._id,
-      receiverId: currentChat.members.find(member => member !== user_detail._id),
-      text: text.current.value   
-    })
-
-    /*socket.current.emit("sendNotification",{
-      userId: user_detail._id,
-      receiverId:currentChat.members.find(member => member !== user_detail._id),
-      notification 
-    })*/
-
-    try{
-      const res = await axios.post("http://localhost:3030/message/",newMessage);    
-      setMessage([...message,res.data]) ;  
-      text.current.value=""     
-   }
-   catch(err){} 
-
-  }
-
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({behavior:"smooth"})
-  },[message])
- 
-
-  //Socket Start and one function of socket in sendText function
-  const socket = useRef()
-  const [arrivalMessage,setArrivalMessage] = useState(null);
-
-
-  useEffect(() => {
-    socket.current = io("localhost:8900")
-    socket.current.on("getMessage", data => {
-      setArrivalMessage({
-        chatId:  currentChat._id ,
-        senderId: data.userId,
-        text: data.text
-      })
-    })
-
-    socket.current.on("getNotification", data => {
-      setNotifications(prev => [...prev,data])
-    })
-
-  },[socket])
-
-
-  useEffect(() => {
-    arrivalMessage && currentChat.members.includes(arrivalMessage.senderId) && setMessage((prev) => [...prev,arrivalMessage])
-  },[arrivalMessage,currentChat])
-
-
-  useEffect(() =>{
-    socket.current.emit("addUser", user_detail._id)
-  },[user_detail])
-
-  
-  return<>
-   <div className='containe'> 
-
-   <div className='header'>
-    <h1 className='h1left'> GoSocial </h1>
-      <input type="text" placeholder="  Search for friend, post or video"/> 
-
-      <ul> 
-          <li className='first'><Link to="/" className='link'>HomePage</Link></li>
-          <li><Link to="/" className='link'>TimeLine</Link></li>
-          <li><Link to="/" className='link'><FaUserAlt fontSize={20}/><span className="osition-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9</span></Link></li>
-          <li><Link to="/" className='link'><MdMessage fontSize={20}/> <span className="osition-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9</span> </Link></li>
-          <li><Link to="/" className='link'><MdNotifications fontSize={25}/> <span className="osition-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9</span> </Link></li>
-          <li><Link to={`/profile/${id}`}><img src={profile_img} className="header_image"></img></Link></li>
-          
-    </ul> 
-
-    </div>
-
-
-    <div id="main">                                                                          
-
-
-            <div className='red messenger-red' >                                                                  
-              <div className="chatters-header">
-                  <h3 className="chatters-header-part">MY FRIENDS</h3>
-
-                    {conversation.map((c) => {
-                      return<>
-                        <div onClick={()=>setCurrentChat(c)}>
-                          <ChatFriends key={c._id} {...c}/>
-                        </div>
-                        </>
-                    })}   
-              
-              </div>
-            </div>                                                                                    
-
-
-
-          <div className='blue message-part '>      
-           
-
-            <div className="messenger-blue">
-                  <div className="chat-messge-header">
-                  <button className="feed green_button receiver-chat-header"><Link to="/" className="link_3"> <img src={chatter_pic} className="all_other"/> {chatter_name} </Link></button>
-                  <hr/>
-                  </div>
-
-                  {currentChat?<>{message.map((msg) => {
-                          return(
-                            <div ref={scrollRef}>
-                              <Message_Syntax key={msg._id} {...msg} />
-                            </div>
-                          )
-                        })}</>:<h1>No Chats</h1>} 
-
-                      
-            </div>
-            
-              <form className="do_messages" onSubmit={sendText}>
-                  <textarea className="type_message" ref={text} placeholder="Write something..."></textarea>
-                  <button className="btn send_message_button">Send</button>
-              </form> 
-
-          </div>                                                                                       
-
-
-
-          <div className='green'>  
-            
-            <div className="receiver-info">
-             <img src={chatter_pic} className="receiver-img"></img>
-              <Link to={`/profile/${chatter_id}`}><button><h3 className="receiver-name">{chatter_name}</h3></button></Link>
-            </div>                                                     
-
-          </div>                                                                                      
-
-
-  </div> 
-  </div>       
-        </>
-}
-
-
-export default App;
-
 
